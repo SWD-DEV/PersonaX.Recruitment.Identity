@@ -1,0 +1,9 @@
+﻿dotnet ef migrations add InitialUserSchema -c ApplicationDbContext -o Data/Migrations/Users
+dotnet ef migrations add IdentityServerConfig -c ConfigurationDbContext -o Data/Migrations/IdentityServer/Configuration
+dotnet ef migrations add IdentityServerOperational -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/Operational
+
+
+
+dotnet ef database update -c ApplicationDbContext
+dotnet ef database update -c ConfigurationDbContext
+dotnet ef database update -c PersistedGrantDbContext
