@@ -1,0 +1,4 @@
+clientId = persol-suite
+clientSecret = g+GzqJ6booxfvVJMXOlvv2y6uZ0oKp074z4VXTkOC10=
+
+https://psl-app-vm3/personax-recruitment
