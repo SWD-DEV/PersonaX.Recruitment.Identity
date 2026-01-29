@@ -14,12 +14,10 @@ namespace Persol.Marketplace.Controllers;
 [Authorize] // Require authentication for all endpoints
 public class BillingController : ControllerBase
 {
-    private readonly BillingDbContext _context;
     private readonly ILogger<BillingController> _logger;
 
-    public BillingController(BillingDbContext context, ILogger<BillingController> logger)
+    public BillingController(ILogger<BillingController> logger)
     {
-        _context = context;
         _logger = logger;
     }
 
@@ -34,12 +32,10 @@ public class BillingController : ControllerBase
         try
         {
             // Test database connection
-            var canConnect = await _context.Database.CanConnectAsync();
             
             return Ok(new
             {
                 status = "healthy",
-                database = canConnect ? "connected" : "disconnected",
                 schema = "billings",
                 timestamp = DateTime.UtcNow
             });
@@ -88,16 +84,10 @@ public class BillingController : ControllerBase
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     public IActionResult GetSchemaInfo()
     {
-        var connectionString = _context.Database.GetConnectionString();
-        var maskedConnectionString = connectionString != null 
-            ? Regex.Replace(connectionString, @"password=[^;]*", "password=***", RegexOptions.IgnoreCase)
-            : "not available";
 
         return Ok(new
         {
             schemaName = "billings",
-            connectionString = maskedConnectionString,
-            provider = _context.Database.ProviderName,
             note = "Add your entities and DbSet properties to BillingDbContext"
         });
     }

@@ -60,9 +60,6 @@ internal static class HostingExtensions
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
 
-        builder.Services.AddDbContext<BillingDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
-
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
@@ -95,8 +92,8 @@ internal static class HostingExtensions
             .AddGoogle(options =>
             {
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                options.ClientId = "copy client ID from Google here";
-                options.ClientSecret = "copy client secret from Google here";
+                options.ClientId = "491186748288-30koutndk6om8cavaonq0t1k90tmaot4.apps.googleusercontent.com";
+                options.ClientSecret = "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";
             });
 
         return builder.Build();
