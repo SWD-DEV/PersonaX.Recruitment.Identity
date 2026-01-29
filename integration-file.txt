@@ -1,4 +1,4 @@
 clientId = persol-suite
-clientSecret = g+GzqJ6booxfvVJMXOlvv2y6uZ0oKp074z4VXTkOC10=
+clientSecret = L#?+;@e&?7D40p0kYO93e>u}18qI7^
 
 https://psl-app-vm3/personax-recruitment-identity/.well-known/openid-configuration
