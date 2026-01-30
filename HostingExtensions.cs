@@ -1,10 +1,11 @@
 ﻿using Duende.IdentityServer;
-using Persol.Marketplace.Data;
-using Persol.Marketplace.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
+using Persol.Marketplace.Data;
+using Persol.Marketplace.Models;
+using Serilog;
 
 namespace Persol.Marketplace;
 
@@ -94,7 +95,46 @@ internal static class HostingExtensions
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 options.ClientId = "491186748288-30koutndk6om8cavaonq0t1k90tmaot4.apps.googleusercontent.com";
                 options.ClientSecret = "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";
-            });
+            })
+            .AddOpenIdConnect("AzureAD", "Microsoft", options =>
+                            {
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+
+                var tenantId = builder.Configuration["Authentication:AzureAd:TenantId"];
+                options.Authority = $"https://login.microsoftonline.com/consumers/v2.0";
+                options.ClientId = builder.Configuration["Authentication:AzureAd:ClientId"]!;
+                options.ClientSecret = builder.Configuration["Authentication:AzureAd:ClientSecret"]!;
+
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                options.SaveTokens = true;
+
+                options.Scope.Clear();
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.Scope.Add("email");
+
+                options.TokenValidationParameters.NameClaimType = "name";
+                            })
+            .AddGitHub("GitHub", "GitHub", options =>
+            {
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]!;
+                options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]!;
+                options.Scope.Add("user:email");
+            })
+
+            //.AddLinkedIn("LinkedIn", "LinkedIn", options =>
+            //{
+            //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+            //    options.ClientId = builder.Configuration["Authentication:LinkedIn:ClientId"]!;
+            //    options.ClientSecret = builder.Configuration["Authentication:LinkedIn:ClientSecret"]!;
+            //    options.Scope.Add("openid");
+            //    options.Scope.Add("profile");
+            //    options.Scope.Add("email");
+            //})
+;
+        ;
 
         return builder.Build();
     }

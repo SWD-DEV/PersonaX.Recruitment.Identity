@@ -4,12 +4,16 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+	  <UserSecretsId>aae03606-ae9b-441d-842c-b9e6548b97a1</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="8.0.0" />
+		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="8.0.0" />
 		<PackageReference Include="Duende.IdentityServer" Version="7.3.2" />
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.3.2" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.3.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.11" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.3" />
 
